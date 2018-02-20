@@ -1,0 +1,14 @@
+Asset Listings
+
+<%= form_tag('/listings', method: 'post') do %>
+  <%= text_field_tag :name %>
+  <%= submit_tag 'New Listing' %>
+<% end %>
+
+<% if @assets.any? %>
+  <ul>
+    <% @assets.each do |asset| %>
+      <li><%= asset.name %>: <%= asset.equity %></li>
+    <% end %>
+  </ul>
+<% end %>
