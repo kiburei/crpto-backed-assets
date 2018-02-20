@@ -29,6 +29,15 @@
   </div>
   <div class="col s4">
     <h3>Actions</h3>
+    <%= form_tag('/transactions', method: 'get') do %>
+      <%= label_tag 'Transfer' %>
+      <%= number_field_tag 'value' %>
+      <%= label_tag 'From' %>
+      <%= select_tag 'from', options_for_select([["Listing" , "" ]] + @assets.collect{ |u| [u.name, u.id]}), class: "browser-default" %>
+      <%= label_tag 'To' %>
+      <%= select_tag 'to', options_for_select([["User" , "" ]] + @users.collect{ |u| [u.name, u.id]}), class: "browser-default" %>
+      <%= submit_tag 'Send' %>
+    <% end %>
   </div>
   <div class="col s4">
     <h3>Users</h3>
