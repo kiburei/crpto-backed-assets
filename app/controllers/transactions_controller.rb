@@ -6,9 +6,26 @@ class TransactionsController < ApplicationController
     value = transaction_params[:value].to_f
     @listing = Listing.find(transaction_params[:from])
     @user = User.find(transaction_params[:to])
-    @listing.update(equity: @listing.equity - value)
-    @user.update(balance: @user.balance + value)
+    if @listing.equity >= value
+      @listing.update(equity: @listing.equity - value)
+      @user.update(balance: @user.balance + value)
+    else
+      # rails error
+    end
     redirect_to root_path
+  end
+
+  def user_to_listing
+    value = transaction_params[:value].to_f
+    @user = User.find(transaction_params[:from])
+    @listing = Listing.find(transaction_params[:to])
+    if @user.balance >= value
+      @user.update(balance: @user.balance - value)
+      @listing.update(equity: @listing.equity + value)
+      redirect_to root_path
+    else
+      redirect_to error
+    end
   end
 
   private
